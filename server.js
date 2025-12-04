@@ -18,9 +18,10 @@ const app = express()
 const dist = path.resolve(__dirname, 'vite-project/dist')
 
 // CORS 설정
+const defaultOrigins = ['http://localhost:5173', 'https://slowsoyo.com']
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map((origin) => origin.trim())
-  : ['http://localhost:5173']
+  : defaultOrigins
 
 app.use(
   cors({

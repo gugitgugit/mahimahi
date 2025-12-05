@@ -133,7 +133,7 @@ export function useCheckout() {
           name: item.product.name,
           price: item.product.sellingPrice,
           brand: item.product.brand,
-          thumbnailUrl: item.product.thumbnailUrl,
+          thumbnail1: item.product.thumbnail1,
           quantity: item.quantity,
         })),
         totalPrice: totalPrice,

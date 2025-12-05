@@ -21,8 +21,10 @@ export function useEditProduct() {
   const [loading, setLoading] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState([])
   const [imagePreviews, setImagePreviews] = useState([])
-  const [selectedThumbnail, setSelectedThumbnail] = useState(null)
-  const [thumbnailPreview, setThumbnailPreview] = useState('')
+  const [selectedThumbnail1, setSelectedThumbnail1] = useState(null)
+  const [thumbnail1Preview, setThumbnail1Preview] = useState('')
+  const [selectedThumbnail2, setSelectedThumbnail2] = useState(null)
+  const [thumbnail2Preview, setThumbnail2Preview] = useState('')
 
   const [displayPurchasePrice, setDisplayPurchasePrice] = useState('')
   const [displaySellingPrice, setDisplaySellingPrice] = useState('')
@@ -48,7 +50,8 @@ export function useEditProduct() {
         setValue('purchasePrice', product.purchasePrice)
         setValue('sellingPrice', product.sellingPrice)
 
-        setThumbnailPreview(product.thumbnailUrl)
+        setThumbnail1Preview(product.thumbnail1 || '')
+        setThumbnail2Preview(product.thumbnail2 || '')
         setImagePreviews(product.imageUrls)
 
         setDisplayPurchasePrice(formatNumberWithCommas(product.purchasePrice))
@@ -95,14 +98,25 @@ export function useEditProduct() {
     setImagePreviews(previews)
   }, [])
 
-  const handleThumbnailChange = useCallback((event) => {
+  const handleThumbnail1Change = useCallback((event) => {
     const file = event.target.files[0]
     if (file) {
-      setSelectedThumbnail(file)
-      setThumbnailPreview(URL.createObjectURL(file))
+      setSelectedThumbnail1(file)
+      setThumbnail1Preview(URL.createObjectURL(file))
     } else {
-      setSelectedThumbnail(null)
-      setThumbnailPreview('')
+      setSelectedThumbnail1(null)
+      setThumbnail1Preview('')
+    }
+  }, [])
+
+  const handleThumbnail2Change = useCallback((event) => {
+    const file = event.target.files[0]
+    if (file) {
+      setSelectedThumbnail2(file)
+      setThumbnail2Preview(URL.createObjectURL(file))
+    } else {
+      setSelectedThumbnail2(null)
+      setThumbnail2Preview('')
     }
   }, [])
 
@@ -110,12 +124,20 @@ export function useEditProduct() {
     async (data) => {
       setLoading(true)
       try {
-        let thumbnailUrl = thumbnailPreview
-        if (selectedThumbnail) {
+        let thumbnail1 = thumbnail1Preview
+        if (selectedThumbnail1) {
           const thumbnailUploadResponse = await uploadImages([
-            selectedThumbnail,
+            selectedThumbnail1,
           ])
-          thumbnailUrl = thumbnailUploadResponse.imageUrls[0]
+          thumbnail1 = thumbnailUploadResponse.imageUrls[0]
+        }
+
+        let thumbnail2 = thumbnail2Preview
+        if (selectedThumbnail2) {
+          const thumbnailUploadResponse = await uploadImages([
+            selectedThumbnail2,
+          ])
+          thumbnail2 = thumbnailUploadResponse.imageUrls[0]
         }
 
         let imageUrls = imagePreviews
@@ -126,7 +148,8 @@ export function useEditProduct() {
 
         const response = await updateProduct(productId, {
           ...data,
-          thumbnailUrl,
+          thumbnail1,
+          thumbnail2,
           imageUrls,
         })
         alert(response.message)
@@ -139,8 +162,10 @@ export function useEditProduct() {
       }
     },
     [
-      thumbnailPreview,
-      selectedThumbnail,
+      thumbnail1Preview,
+      selectedThumbnail1,
+      thumbnail2Preview,
+      selectedThumbnail2,
       imagePreviews,
       selectedFiles,
       productId,
@@ -155,13 +180,15 @@ export function useEditProduct() {
     errors,
     loading,
     imagePreviews,
-    thumbnailPreview,
+    thumbnail1Preview,
+    thumbnail2Preview,
     displayPurchasePrice,
     displaySellingPrice,
     margin,
     onSubmit,
     handleFileChange,
-    handleThumbnailChange,
+    handleThumbnail1Change,
+    handleThumbnail2Change,
     handlePurchasePriceChange,
     handleSellingPriceChange,
   }

@@ -147,7 +147,7 @@ const OrderList = ({
                           {order.items.map((item) => (
                             <li key={item._id} className="flex items-center">
                               <img
-                                src={item.thumbnailUrl}
+                                src={item.thumbnail1 || item.thumbnailUrl}
                                 alt={item.name}
                                 className="h-16 w-16 rounded-md object-cover shadow-sm"
                               />

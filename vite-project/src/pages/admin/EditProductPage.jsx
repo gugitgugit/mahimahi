@@ -15,13 +15,15 @@ const EditProductPage = () => {
     errors,
     loading,
     imagePreviews,
-    thumbnailPreview,
+    thumbnail1Preview,
+    thumbnail2Preview,
     displayPurchasePrice,
     displaySellingPrice,
     margin,
     onSubmit,
     handleFileChange,
-    handleThumbnailChange,
+    handleThumbnail1Change,
+    handleThumbnail2Change,
     handlePurchasePriceChange,
     handleSellingPriceChange,
   } = useEditProduct()
@@ -41,8 +43,10 @@ const EditProductPage = () => {
           loading={loading}
           handleFileChange={handleFileChange}
           imagePreviews={imagePreviews}
-          handleThumbnailChange={handleThumbnailChange}
-          thumbnailPreview={thumbnailPreview}
+          handleThumbnail1Change={handleThumbnail1Change}
+          handleThumbnail2Change={handleThumbnail2Change}
+          thumbnail1Preview={thumbnail1Preview}
+          thumbnail2Preview={thumbnail2Preview}
           displayPurchasePrice={displayPurchasePrice}
           handlePurchasePriceChange={handlePurchasePriceChange}
           displaySellingPrice={displaySellingPrice}

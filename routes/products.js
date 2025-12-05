@@ -24,7 +24,8 @@ module.exports = function (db) {
             sellingPrice: Math.floor(sellingPrice / 100) * 100,
             category: category,
             brand: brands[productIndex % brands.length],
-            thumbnailUrl: `https://picsum.photos/seed/${productIndex}/400/400`,
+            thumbnail1: `https://picsum.photos/seed/${productIndex}/400/400`,
+            thumbnail2: `https://picsum.photos/seed/${productIndex}-2/400/400`,
             imageUrls: [
               `https://picsum.photos/seed/${productIndex}-1/800/800`,
               `https://picsum.photos/seed/${productIndex}-2/800/800`,

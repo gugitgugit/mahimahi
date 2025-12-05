@@ -11,7 +11,7 @@ const CartItem = ({ item, handleQuantityChange, handleRemoveItem }) => {
         <div className="h-24 w-24 rounded-md bg-gray-200 sm:h-32 sm:w-32">
           {isIntersecting && (
             <img
-              src={item.product.thumbnailUrl}
+              src={item.product.thumbnail1}
               alt={item.product.name}
               onLoad={() => setIsImageLoaded(true)}
               className={`h-full w-full rounded-md object-cover object-center transition-opacity duration-500 ${

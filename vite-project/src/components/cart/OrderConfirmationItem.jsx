@@ -10,7 +10,7 @@ const OrderConfirmationItem = ({ item }) => {
       <div className="h-16 w-16 flex-shrink-0 rounded-md bg-gray-200">
         {isIntersecting && (
           <img
-            src={item.thumbnailUrl}
+            src={item.thumbnail1 || item.thumbnailUrl}
             alt={item.name}
             onLoad={() => setIsImageLoaded(true)}
             className={`h-full w-full rounded-md object-cover transition-opacity duration-500 ${

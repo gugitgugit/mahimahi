@@ -10,7 +10,7 @@ const CheckoutItem = ({ item }) => {
       <div className="h-24 w-24 flex-shrink-0 rounded-md bg-gray-200">
         {isIntersecting && (
           <img
-            src={item.product.thumbnailUrl}
+              src={item.product.thumbnail1}
             alt={item.product.name}
             onLoad={() => setIsImageLoaded(true)}
             className={`h-full w-full rounded-md object-cover transition-opacity duration-500 ${

@@ -80,14 +80,8 @@ const NavigationBar = () => {
                     to="/member/cart"
                     className="block rounded-lg px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-100"
                   >
-                    Cart
+                    Cart {cartItemCount > 0 && `(${cartItemCount})`}
                   </Link>
-                  <button
-                    onClick={handleSignOut}
-                    className="w-full cursor-pointer rounded-lg px-4 py-2 text-left text-sm font-semibold text-gray-900 hover:bg-gray-100"
-                  >
-                    Sign Out
-                  </button>
                 </>
               )}
             </div>
@@ -105,6 +99,18 @@ const NavigationBar = () => {
               </Link>
             ))}
           </nav>
+
+          {/* Sign Out 버튼 (맨 아래) */}
+          {isAuthenticated && (
+            <div className="mt-auto px-4 pb-4">
+              <button
+                onClick={handleSignOut}
+                className="w-full cursor-pointer rounded-lg px-4 py-2 text-left text-sm font-semibold text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
         </div>
       </aside>
 
@@ -227,17 +233,8 @@ const NavigationBar = () => {
                     className="block rounded-lg px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-100"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Cart
+                    Cart {cartItemCount > 0 && `(${cartItemCount})`}
                   </Link>
-                  <button
-                    onClick={() => {
-                      handleSignOut()
-                      setMobileMenuOpen(false)
-                    }}
-                    className="w-full cursor-pointer rounded-lg px-4 py-2 text-left text-sm font-semibold text-gray-900 hover:bg-gray-100"
-                  >
-                    Sign Out
-                  </button>
                 </>
               )}
             </div>
@@ -259,6 +256,21 @@ const NavigationBar = () => {
               </Link>
             ))}
           </nav>
+
+          {/* Sign Out 버튼 (맨 아래) */}
+          {isAuthenticated && (
+            <div className="mt-auto px-4 pb-4">
+              <button
+                onClick={() => {
+                  handleSignOut()
+                  setMobileMenuOpen(false)
+                }}
+                className="w-full cursor-pointer rounded-lg px-4 py-2 text-left text-sm font-semibold text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

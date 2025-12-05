@@ -155,7 +155,8 @@ module.exports = function (db) {
         purchasePrice,
         sellingPrice,
         category,
-        thumbnailUrl,
+        thumbnail1,
+        thumbnail2,
         imageUrls,
         stock,
         brand,
@@ -167,14 +168,14 @@ module.exports = function (db) {
         !purchasePrice ||
         !sellingPrice ||
         !category ||
-        !thumbnailUrl ||
+        !thumbnail1 ||
         !imageUrls ||
         !Array.isArray(imageUrls) ||
         stock === undefined ||
         !brand
       ) {
         return res.status(400).json({
-          message: '모든 필수 필드를 입력해주세요. (썸네일, 이미지 URL 포함)',
+          message: '모든 필수 필드를 입력해주세요. (썸네일1, 이미지 URL 포함)',
         })
       }
 
@@ -184,7 +185,8 @@ module.exports = function (db) {
         purchasePrice: Number(purchasePrice),
         sellingPrice: Number(sellingPrice),
         category,
-        thumbnailUrl,
+        thumbnail1,
+        thumbnail2: thumbnail2 || '',
         imageUrls,
         stock: Number(stock),
         brand,
@@ -310,7 +312,8 @@ module.exports = function (db) {
         purchasePrice,
         sellingPrice,
         category,
-        thumbnailUrl,
+        thumbnail1,
+        thumbnail2,
         imageUrls,
         stock,
         brand,
@@ -322,7 +325,7 @@ module.exports = function (db) {
         !purchasePrice ||
         !sellingPrice ||
         !category ||
-        !thumbnailUrl ||
+        !thumbnail1 ||
         !imageUrls ||
         !Array.isArray(imageUrls) ||
         stock === undefined ||
@@ -339,7 +342,8 @@ module.exports = function (db) {
         purchasePrice: Number(purchasePrice),
         sellingPrice: Number(sellingPrice),
         category,
-        thumbnailUrl,
+        thumbnail1,
+        thumbnail2: thumbnail2 || '',
         imageUrls,
         stock: Number(stock),
         brand,

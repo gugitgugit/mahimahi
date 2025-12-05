@@ -41,7 +41,7 @@ const ProductCardAdmin = ({ product, handleDelete }) => {
       <div ref={ref} className="h-64 w-full overflow-hidden bg-gray-200">
         {isIntersecting && (
           <img
-            src={product.thumbnailUrl}
+            src={product.thumbnail1}
             alt={product.name}
             onLoad={() => setIsImageLoaded(true)}
             className={`h-full w-full object-cover transition-opacity duration-500 ${

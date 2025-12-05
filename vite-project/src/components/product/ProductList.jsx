@@ -24,8 +24,8 @@ const ProductList = ({
     <div className="bg-white">
       <div>
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+          <div className="flex items-baseline justify-between pt-24 pb-6">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900">
               {(() => {
                 const categoryLabels = {
                   'all': 'ALL',
@@ -39,7 +39,22 @@ const ProductList = ({
               })()}
             </h1>
 
-            <div className="flex items-center">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
+                  <MagnifyingGlassIcon
+                    className="h-4 w-4 text-gray-400"
+                    aria-hidden="true"
+                  />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={handleSearchTermChange}
+                  className="block w-48 rounded-md border-gray-300 py-1.5 pl-8 pr-2 text-sm focus:border-black focus:ring-black"
+                />
+              </div>
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
@@ -86,23 +101,6 @@ const ProductList = ({
               </Menu>
             </div>
           </div>
-          <div className="py-3">
-            <div className="relative">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <MagnifyingGlassIcon
-                  className="h-5 w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-              </div>
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={handleSearchTermChange}
-                className="block w-full rounded-md border-gray-300 py-3 pl-10 focus:border-black focus:ring-black sm:text-sm"
-              />
-            </div>
-          </div>
 
           <section aria-labelledby="products-heading" className="pt-6 pb-24">
             <h2 id="products-heading" className="sr-only">
@@ -111,7 +109,7 @@ const ProductList = ({
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               <div className="lg:col-span-4">
-                <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
                   {products.map((product) => (
                     <ProductItem key={product._id} product={product} />
                   ))}

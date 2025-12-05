@@ -9,8 +9,10 @@ const ProductForm = ({
   loading,
   handleFileChange,
   imagePreviews,
-  handleThumbnailChange,
-  thumbnailPreview,
+  handleThumbnail1Change,
+  handleThumbnail2Change,
+  thumbnail1Preview,
+  thumbnail2Preview,
   displayPurchasePrice,
   handlePurchasePriceChange,
   displaySellingPrice,
@@ -237,23 +239,47 @@ const ProductForm = ({
             <div className="mt-4 space-y-4">
               <div>
                 <label
-                  htmlFor="thumbnail"
+                  htmlFor="thumbnail1"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  썸네일 이미지 (1장)
+                  썸네일1 이미지 (필수)
                 </label>
                 <input
-                  id="thumbnail"
+                  id="thumbnail1"
                   type="file"
                   accept="image/*"
-                  onChange={handleThumbnailChange}
+                  onChange={handleThumbnail1Change}
                   className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-black file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-gray-800"
                 />
-                {thumbnailPreview && (
+                {thumbnail1Preview && (
                   <div className="mt-2">
                     <img
-                      src={thumbnailPreview}
-                      alt="썸네일 미리보기"
+                      src={thumbnail1Preview}
+                      alt="썸네일1 미리보기"
+                      className="h-24 w-24 rounded-md object-cover"
+                    />
+                  </div>
+                )}
+              </div>
+              <div>
+                <label
+                  htmlFor="thumbnail2"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  썸네일2 이미지 (선택)
+                </label>
+                <input
+                  id="thumbnail2"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleThumbnail2Change}
+                  className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-black file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-gray-800"
+                />
+                {thumbnail2Preview && (
+                  <div className="mt-2">
+                    <img
+                      src={thumbnail2Preview}
+                      alt="썸네일2 미리보기"
                       className="h-24 w-24 rounded-md object-cover"
                     />
                   </div>

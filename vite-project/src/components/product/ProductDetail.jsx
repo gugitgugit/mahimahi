@@ -35,7 +35,7 @@ const ProductDetail = ({
           <div className="lg:grid lg:grid-cols-2 lg:gap-x-8">
             <div className="aspect-w-3 aspect-h-4 overflow-hidden rounded-lg bg-gray-200">
               <img
-                src={product.thumbnailUrl}
+                src={product.thumbnail1}
                 alt={product.name}
                 className={`h-full w-full object-cover object-center transition-opacity duration-500 ease-in-out ${
                   isThumbnailLoaded ? 'opacity-100' : 'opacity-0'

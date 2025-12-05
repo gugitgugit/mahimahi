@@ -15,8 +15,10 @@ export function useAddProduct() {
   const [loading, setLoading] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState([])
   const [imagePreviews, setImagePreviews] = useState([])
-  const [selectedThumbnail, setSelectedThumbnail] = useState(null)
-  const [thumbnailPreview, setThumbnailPreview] = useState('')
+  const [selectedThumbnail1, setSelectedThumbnail1] = useState(null)
+  const [thumbnail1Preview, setThumbnail1Preview] = useState('')
+  const [selectedThumbnail2, setSelectedThumbnail2] = useState(null)
+  const [thumbnail2Preview, setThumbnail2Preview] = useState('')
   const [displayPurchasePrice, setDisplayPurchasePrice] = useState('')
   const [displaySellingPrice, setDisplaySellingPrice] = useState('')
   const [margin, setMargin] = useState('0.00%')
@@ -52,14 +54,25 @@ export function useAddProduct() {
     setImagePreviews(previews)
   }, [])
 
-  const handleThumbnailChange = useCallback((event) => {
+  const handleThumbnail1Change = useCallback((event) => {
     const file = event.target.files[0]
     if (file) {
-      setSelectedThumbnail(file)
-      setThumbnailPreview(URL.createObjectURL(file))
+      setSelectedThumbnail1(file)
+      setThumbnail1Preview(URL.createObjectURL(file))
     } else {
-      setSelectedThumbnail(null)
-      setThumbnailPreview('')
+      setSelectedThumbnail1(null)
+      setThumbnail1Preview('')
+    }
+  }, [])
+
+  const handleThumbnail2Change = useCallback((event) => {
+    const file = event.target.files[0]
+    if (file) {
+      setSelectedThumbnail2(file)
+      setThumbnail2Preview(URL.createObjectURL(file))
+    } else {
+      setSelectedThumbnail2(null)
+      setThumbnail2Preview('')
     }
   }, [])
 
@@ -67,12 +80,20 @@ export function useAddProduct() {
     async (data) => {
       setLoading(true)
       try {
-        let thumbnailUrl = ''
-        if (selectedThumbnail) {
+        let thumbnail1 = ''
+        if (selectedThumbnail1) {
           const thumbnailUploadResponse = await uploadImages([
-            selectedThumbnail,
+            selectedThumbnail1,
           ])
-          thumbnailUrl = thumbnailUploadResponse.imageUrls[0]
+          thumbnail1 = thumbnailUploadResponse.imageUrls[0]
+        }
+
+        let thumbnail2 = ''
+        if (selectedThumbnail2) {
+          const thumbnailUploadResponse = await uploadImages([
+            selectedThumbnail2,
+          ])
+          thumbnail2 = thumbnailUploadResponse.imageUrls[0]
         }
 
         let imageUrls = []
@@ -83,7 +104,8 @@ export function useAddProduct() {
 
         const response = await createProduct({
           ...data,
-          thumbnailUrl,
+          thumbnail1,
+          thumbnail2,
           imageUrls,
         })
         alert(response.message)
@@ -95,7 +117,7 @@ export function useAddProduct() {
         setLoading(false)
       }
     },
-    [navigate, selectedFiles, selectedThumbnail],
+    [navigate, selectedFiles, selectedThumbnail1, selectedThumbnail2],
   )
 
   return {
@@ -105,13 +127,15 @@ export function useAddProduct() {
     errors,
     loading,
     imagePreviews,
-    thumbnailPreview,
+    thumbnail1Preview,
+    thumbnail2Preview,
     displayPurchasePrice,
     displaySellingPrice,
     margin,
     onSubmit,
     handleFileChange,
-    handleThumbnailChange,
+    handleThumbnail1Change,
+    handleThumbnail2Change,
     handlePriceChange,
     setDisplayPurchasePrice,
     setDisplaySellingPrice,

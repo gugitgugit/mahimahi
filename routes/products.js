@@ -2,38 +2,49 @@ const router = require('express').Router()
 const { ObjectId } = require('mongodb')
 
 module.exports = function (db) {
-  // 더미 데이터 만들기(http://localhost:8080/api/products/seed)로 접속하면 더미 데이터 20개 생성
+  // 더미 데이터 만들기(http://localhost:8080/api/products/seed)로 접속하면 각 카테고리마다 20개씩 총 100개 생성
   router.get('/seed', async (req, res) => {
     try {
-      const categories = ['outer', 'top', 'bottom', 'shoes', 'accessory']
+      const categories = ['new-in', 'outer', 'top', 'bottom', 'acc']
       const brands = ['Soyo', 'BrandB', 'BrandC', 'BrandD']
-      const dummyProducts = Array.from({ length: 20 }).map((_, i) => {
-        const category = categories[i % categories.length]
-        const purchasePrice = Math.floor(Math.random() * 50000) + 5000
-        const sellingPrice = purchasePrice * (1 + Math.random() * 0.5 + 0.2)
-        return {
-          name: `${category} Product ${i + 1}`,
-          description: `This is a description for ${category} product ${i + 1}. It is a high-quality item.`,
-          purchasePrice: purchasePrice,
-          sellingPrice: Math.floor(sellingPrice / 100) * 100,
-          category: category,
-          brand: brands[i % brands.length],
-          thumbnailUrl: `https://picsum.photos/seed/${i}/400/400`,
-          imageUrls: [
-            `https://picsum.photos/seed/${i}-1/800/800`,
-            `https://picsum.photos/seed/${i}-2/800/800`,
-            `https://picsum.photos/seed/${i}-3/800/800`,
-          ],
-          stock: Math.floor(Math.random() * 100),
-          createdAt: new Date(),
-          updatedAt: new Date(),
+      const productsPerCategory = 20
+      
+      const dummyProducts = []
+      
+      categories.forEach((category, categoryIndex) => {
+        for (let i = 0; i < productsPerCategory; i++) {
+          const productIndex = categoryIndex * productsPerCategory + i
+          const purchasePrice = Math.floor(Math.random() * 50000) + 5000
+          const sellingPrice = purchasePrice * (1 + Math.random() * 0.5 + 0.2)
+          
+          dummyProducts.push({
+            name: `${category.toUpperCase()} Product ${i + 1}`,
+            description: `This is a description for ${category} product ${i + 1}. It is a high-quality item.`,
+            purchasePrice: purchasePrice,
+            sellingPrice: Math.floor(sellingPrice / 100) * 100,
+            category: category,
+            brand: brands[productIndex % brands.length],
+            thumbnailUrl: `https://picsum.photos/seed/${productIndex}/400/400`,
+            imageUrls: [
+              `https://picsum.photos/seed/${productIndex}-1/800/800`,
+              `https://picsum.photos/seed/${productIndex}-2/800/800`,
+              `https://picsum.photos/seed/${productIndex}-3/800/800`,
+            ],
+            stock: Math.floor(Math.random() * 100),
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          })
         }
       })
 
       // await db.collection('product').deleteMany({})
       await db.collection('product').insertMany(dummyProducts)
 
-      res.status(200).json({ message: 'Successfully seeded 20 products.' })
+      res.status(200).json({ 
+        message: `Successfully seeded ${dummyProducts.length} products (${productsPerCategory} per category).`,
+        totalProducts: dummyProducts.length,
+        productsPerCategory: productsPerCategory
+      })
     } catch (err) {
       console.error(err)
       res.status(500).json({ message: 'Failed to seed database.' })

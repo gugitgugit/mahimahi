@@ -25,8 +25,18 @@ const ProductList = ({
       <div>
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 capitalize">
-              {category}
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+              {(() => {
+                const categoryLabels = {
+                  'all': 'ALL',
+                  'new-in': 'NEW IN',
+                  'outer': 'OUTER',
+                  'top': 'TOP',
+                  'bottom': 'BOTTOM',
+                  'acc': 'ACC',
+                }
+                return categoryLabels[category] || category.toUpperCase()
+              })()}
             </h1>
 
             <div className="flex items-center">

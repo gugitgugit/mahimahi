@@ -193,11 +193,11 @@ const ProductForm = ({
                   className="focus:ring-opacity-50 mt-1 block w-full rounded-md border border-gray-200 px-3 py-2 focus:border-black focus:ring-black sm:text-sm"
                 >
                   <option value="">카테고리 선택</option>
-                  <option value="outer">Outer</option>
-                  <option value="top">Top</option>
-                  <option value="bottom">Bottom</option>
-                  <option value="shoes">Shoes</option>
-                  <option value="accessory">Accessory</option>
+                  <option value="new-in">NEW IN</option>
+                  <option value="outer">OUTER</option>
+                  <option value="top">TOP</option>
+                  <option value="bottom">BOTTOM</option>
+                  <option value="acc">ACC</option>
                 </select>
                 {errors.category && (
                   <p className="mt-2 text-sm text-red-600">

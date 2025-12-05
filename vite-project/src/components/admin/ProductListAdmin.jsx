@@ -121,19 +121,29 @@ const ProductListAdmin = ({
       </div>
       <div className="mb-6 flex flex-col items-center justify-between sm:flex-row">
         <div className="flex w-full space-x-2 overflow-x-auto pb-2 sm:pb-0">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => handleCategoryChange(category)}
-              className={`flex-shrink-0 cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-200 ${
-                selectedCategory === category
-                  ? 'bg-black text-white shadow-sm'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </button>
-          ))}
+          {categories.map((category) => {
+            const categoryLabels = {
+              'all': 'ALL',
+              'new-in': 'NEW IN',
+              'outer': 'OUTER',
+              'top': 'TOP',
+              'bottom': 'BOTTOM',
+              'acc': 'ACC',
+            }
+            return (
+              <button
+                key={category}
+                onClick={() => handleCategoryChange(category)}
+                className={`flex-shrink-0 cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-200 ${
+                  selectedCategory === category
+                    ? 'bg-black text-white shadow-sm'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                {categoryLabels[category] || category}
+              </button>
+            )
+          })}
         </div>
         <Link
           to="/admin/add-product"

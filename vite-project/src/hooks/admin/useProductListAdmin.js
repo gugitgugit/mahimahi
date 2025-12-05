@@ -12,7 +12,7 @@ export function useProductListAdmin() {
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500)
 
-  const categories = ['all', 'outer', 'top', 'bottom', 'shoes', 'accessory']
+  const categories = ['all', 'new-in', 'outer', 'top', 'bottom', 'acc']
 
   const fetchProducts = useCallback(async () => {
     try {

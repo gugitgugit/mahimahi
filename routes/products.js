@@ -8,16 +8,23 @@ module.exports = function (db) {
       const categories = ['new-in', 'outer', 'top', 'bottom', 'acc']
       const brands = ['Soyo', 'BrandB', 'BrandC', 'BrandD']
       const productsPerCategory = 20
-      
+
       const dummyProducts = []
-      
+
+      const subcategoriesByCategory = {
+        outer: ['jacket', 'vest', 'coat'],
+        top: ['half-shirt', 'shirt', 'sweat-shirt', 'knit-wear'],
+        bottom: ['denim', 'shorts', 'pants'],
+        acc: ['hat', 'bag', 'shoes', 'etc'],
+      }
+
       categories.forEach((category, categoryIndex) => {
         for (let i = 0; i < productsPerCategory; i++) {
           const productIndex = categoryIndex * productsPerCategory + i
           const purchasePrice = Math.floor(Math.random() * 50000) + 5000
           const sellingPrice = purchasePrice * (1 + Math.random() * 0.5 + 0.2)
-          
-          dummyProducts.push({
+
+          const product = {
             name: `${category.toUpperCase()} Product ${i + 1}`,
             description: `This is a description for ${category} product ${i + 1}. It is a high-quality item.`,
             purchasePrice: purchasePrice,
@@ -34,17 +41,26 @@ module.exports = function (db) {
             stock: Math.floor(Math.random() * 100),
             createdAt: new Date(),
             updatedAt: new Date(),
-          })
+          }
+
+          // subcategory를 지원하는 카테고리인 경우 subcategory 추가
+          if (subcategoriesByCategory[category]) {
+            const subcategories = subcategoriesByCategory[category]
+            product.subcategory =
+              subcategories[Math.floor(Math.random() * subcategories.length)]
+          }
+
+          dummyProducts.push(product)
         }
       })
 
-      // await db.collection('product').deleteMany({})
+      await db.collection('product').deleteMany({})
       await db.collection('product').insertMany(dummyProducts)
 
-      res.status(200).json({ 
+      res.status(200).json({
         message: `Successfully seeded ${dummyProducts.length} products (${productsPerCategory} per category).`,
         totalProducts: dummyProducts.length,
-        productsPerCategory: productsPerCategory
+        productsPerCategory: productsPerCategory,
       })
     } catch (err) {
       console.error(err)
@@ -66,12 +82,22 @@ module.exports = function (db) {
     try {
       const page = parseInt(req.query.page) || 1
       const limit = parseInt(req.query.limit) || 12
-      const { category, sort, brand, minPrice, maxPrice, searchTerm } =
-        req.query
+      const {
+        category,
+        sort,
+        brand,
+        minPrice,
+        maxPrice,
+        searchTerm,
+        subcategory,
+      } = req.query
 
       const query = {}
       if (category && category !== 'all') {
         query.category = category
+      }
+      if (subcategory) {
+        query.subcategory = subcategory
       }
       if (brand) {
         query.brand = { $in: brand.split(',') }

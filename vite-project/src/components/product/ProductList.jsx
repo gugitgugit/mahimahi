@@ -16,28 +16,89 @@ const ProductList = ({
   sort,
   sortOptions,
   searchTerm,
+  subcategory,
   handleLoadMore,
   handleSearchTermChange,
   handleSortChange,
+  handleSubcategoryChange,
 }) => {
+  const subcategoriesByCategory = {
+    outer: [
+      { value: 'jacket', label: 'JACKET' },
+      { value: 'vest', label: 'VEST' },
+      { value: 'coat', label: 'COAT' },
+    ],
+    top: [
+      { value: 'half-shirt', label: '1/2 SHIRT' },
+      { value: 'shirt', label: 'SHIRT' },
+      { value: 'sweat-shirt', label: 'SWEAT SHIRT' },
+      { value: 'knit-wear', label: 'KNIT WEAR' },
+    ],
+    bottom: [
+      { value: 'denim', label: 'DENIM' },
+      { value: 'shorts', label: 'SHORTS' },
+      { value: 'pants', label: 'PANTS' },
+    ],
+    acc: [
+      { value: 'hat', label: 'HAT' },
+      { value: 'bag', label: 'BAG' },
+      { value: 'shoes', label: 'SHOES' },
+      { value: 'etc', label: 'ETC' },
+    ],
+  }
+
+  const categoryLabels = {
+    all: 'ALL',
+    'new-in': 'NEW IN',
+    outer: 'OUTER',
+    top: 'TOP',
+    bottom: 'BOTTOM',
+    acc: 'ACC',
+  }
+
+  const hasSubcategories = ['outer', 'top', 'bottom', 'acc'].includes(category)
+  const subcategories = subcategoriesByCategory[category] || []
+
   return (
     <div className="bg-white">
       <div>
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between pt-24 pb-6">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900">
-              {(() => {
-                const categoryLabels = {
-                  'all': 'ALL',
-                  'new-in': 'NEW IN',
-                  'outer': 'OUTER',
-                  'top': 'TOP',
-                  'bottom': 'BOTTOM',
-                  'acc': 'ACC',
-                }
-                return categoryLabels[category] || category.toUpperCase()
-              })()}
-            </h1>
+            <div className="flex flex-col gap-3">
+              {hasSubcategories ? (
+                <button
+                  onClick={() => handleSubcategoryChange('')}
+                  className={`cursor-pointer text-left text-2xl font-bold tracking-tight transition-colors ${
+                    subcategory === ''
+                      ? 'text-gray-900'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  {categoryLabels[category]}
+                </button>
+              ) : (
+                <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+                  {categoryLabels[category] || category.toUpperCase()}
+                </h1>
+              )}
+              {hasSubcategories && (
+                <div className="flex gap-2">
+                  {subcategories.map((sub) => (
+                    <button
+                      key={sub.value}
+                      onClick={() => handleSubcategoryChange(sub.value)}
+                      className={`cursor-pointer px-4 py-1.5 text-sm font-medium transition-colors ${
+                        subcategory === sub.value
+                          ? 'text-gray-900'
+                          : 'text-gray-500 hover:text-gray-900'
+                      }`}
+                    >
+                      {sub.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <div className="flex items-center gap-3">
               <div className="relative">
@@ -52,7 +113,7 @@ const ProductList = ({
                   placeholder="Search..."
                   value={searchTerm}
                   onChange={handleSearchTermChange}
-                  className="block w-48 rounded-md border-gray-300 py-1.5 pl-8 pr-2 text-sm focus:border-black focus:ring-black"
+                  className="block w-48 rounded-md border-gray-300 py-1.5 pr-2 pl-8 text-sm focus:border-black focus:ring-black"
                 />
               </div>
               <Menu as="div" className="relative inline-block text-left">
@@ -110,8 +171,12 @@ const ProductList = ({
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               <div className="lg:col-span-4">
                 <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
-                  {products.map((product) => (
-                    <ProductItem key={product._id} product={product} />
+                  {products.map((product, index) => (
+                    <ProductItem
+                      key={product._id}
+                      product={product}
+                      index={index}
+                    />
                   ))}
                 </div>
 
@@ -120,9 +185,10 @@ const ProductList = ({
                     <button
                       onClick={handleLoadMore}
                       disabled={loading}
-                      className="rounded-md border border-transparent bg-black px-8 py-3 text-base font-medium text-white hover:bg-gray-800 disabled:bg-gray-500"
+                      className="flex flex-col items-center gap-2 text-base font-medium text-gray-900 transition-colors hover:text-gray-600 disabled:text-gray-400"
                     >
-                      {loading ? 'Loading...' : 'Load More'}
+                      <span>{loading ? 'Loading...' : 'Load More'}</span>
+                      <ChevronDownIcon className="h-5 w-5" />
                     </button>
                   </div>
                 )}

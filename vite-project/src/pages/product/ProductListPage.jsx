@@ -17,9 +17,11 @@ const ProductListPage = () => {
     sort,
     sortOptions,
     searchTerm,
+    subcategory,
     handleLoadMore,
     handleSearchTermChange,
     handleSortChange,
+    handleSubcategoryChange,
   } = useProductList()
 
   return (
@@ -32,9 +34,11 @@ const ProductListPage = () => {
       sort={sort}
       sortOptions={sortOptions}
       searchTerm={searchTerm}
+      subcategory={subcategory}
       handleLoadMore={handleLoadMore}
       handleSearchTermChange={handleSearchTermChange}
       handleSortChange={handleSortChange}
+      handleSubcategoryChange={handleSubcategoryChange}
     />
   )
 }

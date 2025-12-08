@@ -17,6 +17,7 @@ export const getProductById = (productId) => api.get(`/products/${productId}`)
  * @param {string} [brand] - 필터링할 브랜드
  * @param {number} [minPrice] - 최소 가격
  * @param {number} [maxPrice] - 최대 가격
+ * @param {string} [subcategory] - 세부 카테고리 (outer의 경우: jacket, vest, coat)
  * @returns {Promise<object>} 상품 목록과 페이지네이션 정보를 포함한 객체
  */
 export const getProducts = (
@@ -28,6 +29,7 @@ export const getProducts = (
   brand,
   minPrice,
   maxPrice,
+  subcategory,
 ) =>
   api.get('/products', {
     params: {
@@ -39,5 +41,6 @@ export const getProducts = (
       brand,
       minPrice,
       maxPrice,
+      subcategory,
     },
   })
